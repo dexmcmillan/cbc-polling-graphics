@@ -14,6 +14,10 @@ class OntarioPolling:
     def __init__(self):
         today = dt.datetime.today()
         
+        print(os.name)
+        if os.name == "posix":
+            today = today + timedelta(hours=4)
+        
         self.day = today.strftime('%B %d, %Y')
         self.time = today.strftime('%I:%M') + " " + ".".join(list(today.strftime('%p'))).lower() + "."
         
@@ -22,7 +26,7 @@ class OntarioPolling:
         self.title = blurbs[0]["blurb_headline"]
         self.description = blurbs[0]["blurb_text"]
         
-    def get_data(self, region="Ontario", poll_type="med"):
+    def get_data(self, region="Ontario", poll_type="med", data_type="seats"):
         
         # Read in data from the poll tracker API into a pandas dataframe.
         raw = requests.get("https://canopy.cbc.ca/live/poll-tracker/v5/ON").json()['data']["stats"]
@@ -32,7 +36,7 @@ class OntarioPolling:
 
         data = []
         for party in parties:
-            df = pd.json_normalize(raw, record_path=["rows", region, party, "seats"], meta=["datetime"])
+            df = pd.json_normalize(raw, record_path=["rows", region, party, data_type], meta=["datetime"])
             
             df["Party"] = party
             df["Region"] = region
@@ -79,7 +83,7 @@ class OntarioPolling:
             
         metadata_update = {
             "annotate": {
-                "notes": f"Last updated on {self.day}."
+                "notes": f"Last updated on {self.day} at {self.time}".replace(" 0", " ")
             }
         }
 
@@ -94,7 +98,7 @@ class OntarioPolling:
             dw.update_chart(chart_id=CHART_ID, title=title)
             dw.update_metadata(chart_id=CHART_ID, properties=metadata_update)
             dw.update_description(chart_id=CHART_ID, intro=description)
-            chart = dw.publish_chart(chart_id=CHART_ID)
+            dw.publish_chart(chart_id=CHART_ID)
             print(f"Chart updated.")
         except:
             print(f"There was a problem!")
