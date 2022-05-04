@@ -26,7 +26,6 @@ table.data["Image"] = (table.data["Party"].replace({
 
 table.data["Text"] = "**" + table.data["Party"] + "**" + "<br>" + table.data["Leader"]
 
-
 table.data = table.data[["Image", "Text", "Share"]]
 
 other = table.data.loc[4, :]

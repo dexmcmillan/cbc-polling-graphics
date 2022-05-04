@@ -1,4 +1,5 @@
 import datetime as dt
+from datetime import timedelta
 import requests
 import pandas as pd
 from datawrapper import Datawrapper
@@ -14,9 +15,8 @@ class OntarioPolling:
     def __init__(self):
         today = dt.datetime.today()
         
-        print(os.name)
         if os.name == "posix":
-            today = today + timedelta(hours=4)
+            today = today + dt.timedelta(hours=4)
         
         self.day = today.strftime('%B %d, %Y')
         self.time = today.strftime('%I:%M') + " " + ".".join(list(today.strftime('%p'))).lower() + "."
