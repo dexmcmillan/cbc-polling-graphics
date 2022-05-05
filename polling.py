@@ -4,6 +4,7 @@ import requests
 import pandas as pd
 from datawrapper import Datawrapper
 import os
+import locale
 
 class OntarioPolling:
     
@@ -12,17 +13,27 @@ class OntarioPolling:
     title = ""
     description = ""
     probabilities = ""
+    language = ""
     
-    def __init__(self):
+    def __init__(self, language="english"):
         today = dt.datetime.today()
+        self.language = language
         
         os_name = os.name
         
         if os_name == "posix":
             today = today - dt.timedelta(hours=4)
+            
+        if language == "english":
+            locale.setlocale(locale.LC_ALL, 'en_US')
+            self.day = today.strftime('%B %d, %Y')
+            self.time = today.strftime('%I:%M') + " " + ".".join(list(today.strftime('%p'))).lower() + "."
+        elif language == "french":
+            locale.setlocale(locale.LC_ALL, 'fr_FR')
+            self.day = today.strftime('%d %B %Y')
+            self.time = today.strftime('%H:%M') + "."
+            
         
-        self.day = today.strftime('%B %d, %Y')
-        self.time = today.strftime('%I:%M') + " " + ".".join(list(today.strftime('%p'))).lower() + "."
         
         blurbs = requests.get("https://canopy.cbc.ca/live/poll-tracker/v5/ON").json()['data']["blurbs"]
 
@@ -70,7 +81,7 @@ class OntarioPolling:
         
         return self
         
-    def publish(self, CHART_ID, title=None, description=None, update_text=False):
+    def publish(self, CHART_ID, title=None, description=None, update_text=False, note=""):
 
         if title == None:
             title = self.title
@@ -98,7 +109,7 @@ class OntarioPolling:
             
         metadata_update = {
             "annotate": {
-                "notes": f"Last updated on {self.day} at {self.time}".replace(" 0", " ")
+                "notes": note
             }
         }
 

@@ -1,50 +1,36 @@
 from polling import OntarioPolling
+from regions_list import regions
 
-regions = [{
-        "region": "Toronto",
-        "CHART_ID": "lXdRO"
-},
-    {
-        "region": "Greater Toronto Area",
-        "CHART_ID": "kjeFf"
-},
-    {
-        "region": "Ontario",
-        "CHART_ID": "T9cnh"
-},
-    {
-        "region": "Hamilton-Niagara",
-        "CHART_ID": "3WmDr"
-},
-    {
-        "region": "Southwest Ontario",
-        "CHART_ID": "7BN3M"
-},
-    {
-        "region": "Eastern Ontario",
-        "CHART_ID": "DjEua"
-},
-    {
-        "region": "Northern Ontario",
-        "CHART_ID": "HiPxE"
-}
-]
+leaders = {
+        "Liberal Party": "Steven Del Duca",
+        "Progressive Conservative Party": "Doug Ford",
+        "Green Party": "Mike Schreiner",
+        "New Democratic Party": "Andrea Horwath",
+        "Other": ""
+        }
+
+french_names = {
+        "Liberal Party": "Parti libéral de l'Ontario",
+        "Progressive Conservative Party": "Parti progressiste-conservateur de l'Ontario",
+        "Green Party": "Parti vert de l'Ontario",
+        "New Democratic Party": "Nouveau Parti démocratique de l'Ontario",
+        "Other": "Les autres"
+        }
+
+french_regions = {
+        "Northern Ontario": "Nord de l'Ontario",
+        }
 
 for region in regions:
 
-    table = OntarioPolling().get_data(
+    table = OntarioPolling(language=region["language"]).get_data(
         region=region['region'], data_type="share")
 
     table.data = table.data.iloc[[-1], :].transpose().reset_index().drop(0)
     table.data.columns = ["Party", "Share"]
     table.data = table.data.sort_values("Share", ascending=False)
 
-    table.data["Leader"] = table.data["Party"].replace({
-        "Liberal Party": "Steven Del Duca",
-        "Progressive Conservative Party": "Doug Ford",
-        "Green Party": "Mike Schreiner",
-        "New Democratic Party": "Andrea Horwath",
-        "Other": ""})
+    table.data["Leader"] = table.data["Party"].replace(leaders)
 
     table.data["Image"] = (table.data["Party"].replace({
         "Liberal Party": "![](https://newsinteractives.cbc.ca/elections/poll-tracker/ontario/assets/images/ON/LIB_leader.jpg)",
@@ -54,6 +40,13 @@ for region in regions:
         "Other": ""
     })
     )
+    
+    if region["language"] == "french":
+        table.data["Party"] = table.data["Party"].replace(french_names)
+        note = f"Dernière mise à jour: {table.day} à {table.time}".replace(" 0", " ")
+    else:
+        title = f"Polling averages in {region['region']}"
+        note = f"Last updated on {table.day} at {table.time}".replace(" 0", " ")
 
     table.data["Text"] = "**" + table.data["Party"] + \
         "**" + "<br>" + table.data["Leader"]
@@ -63,5 +56,4 @@ for region in regions:
     other = table.data.loc[4, :]
     table.data = table.data.drop(4).append(other)
 
-    table.publish(region['CHART_ID'], description="",
-                  title=f"Polling averages in {region['region']}")
+    table.publish(region['CHART_ID'], note=note)
