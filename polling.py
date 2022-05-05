@@ -11,6 +11,7 @@ class OntarioPolling:
     time = ""
     title = ""
     description = ""
+    probabilities = ""
     
     def __init__(self):
         today = dt.datetime.today()
@@ -26,7 +27,19 @@ class OntarioPolling:
         self.title = blurbs[0]["blurb_headline"]
         self.description = blurbs[0]["blurb_text"]
         
-    def get_data(self, region="Ontario", poll_type="med", data_type="seats"):
+    def get_probabilities(self):
+        probabilities = requests.get("https://canopy.cbc.ca/live/poll-tracker/v5/ON").json()['data']['supplements']
+        
+        probabilities = pd.json_normalize(probabilities)
+        
+        probabilities = probabilities.loc[(probabilities["property"].isin(["Probability of Winning", "Probability of Majority"])) & probabilities["property_meta"].isin(["PC", "LIB"]),:]
+        probabilities = probabilities.replace({"LIB": "Liberal Party", "PC": "Progressive Conservative Party", "GRN": "Green Party", "NDP": "New Democratic Party", "OTH": "Other"})
+
+        self.probabilities = probabilities
+        
+        return self 
+        
+    def get_data(self, region="Ontario", data_type="seats", poll_type="med"):
         
         # Read in data from the poll tracker API into a pandas dataframe.
         raw = requests.get("https://canopy.cbc.ca/live/poll-tracker/v5/ON").json()['data']["stats"]

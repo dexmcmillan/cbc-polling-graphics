@@ -21,7 +21,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Map update and publish
+      - name: Update line chart
         env: 
             DW_AUTH_TOKEN: ${{ secrets.DW_AUTH_TOKEN }}
         run: python3 script-ontario.py
+
+      - name: Update tables
+        env: 
+            DW_AUTH_TOKEN: ${{ secrets.DW_AUTH_TOKEN }}
+        run: python3 script-tables.py
