@@ -19,7 +19,7 @@ class OntarioPolling:
         os_name = os.name
         
         if os_name == "posix":
-            today = today + dt.timedelta(hours=4)
+            today = today - dt.timedelta(hours=4)
         
         self.day = today.strftime('%B %d, %Y')
         self.time = today.strftime('%I:%M') + " " + ".".join(list(today.strftime('%p'))).lower() + "."
