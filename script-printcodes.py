@@ -43,7 +43,6 @@ headers = {
     "Authorization": f"Bearer {DW_AUTH_TOKEN}"
     }
 
-
 dw = Datawrapper(access_token=DW_AUTH_TOKEN)
 
 codes = []
@@ -56,12 +55,12 @@ for region in regions:
     
     link = f"https://www.datawrapper.de/_/{id}/"
     
-    string = f"**{title}**\n**View**: {link}\n**Embed**: {code}"
+    string = f"**{title}**  **View**: {link}  **Embed**: {code}"
     print(string)
     codes.append(string)
 
 
 with open("embed_codes.md", "w") as text_file:
-    text_file.write("\n\n".join(codes))
+    text_file.write("    ".join(codes))
     
 print(len(codes))
