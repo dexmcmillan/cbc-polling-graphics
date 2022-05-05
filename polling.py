@@ -70,7 +70,7 @@ class OntarioPolling:
         
         return self
         
-    def publish(self, CHART_ID, title=None, description=None):
+    def publish(self, CHART_ID, title=None, description=None, update_text=False):
 
         if title == None:
             title = self.title
@@ -110,9 +110,13 @@ class OntarioPolling:
             print(f"Problem! You may have forgotten to call the get_data() method.")
         
         try:    
-            dw.update_chart(chart_id=CHART_ID, title=title)
+            if update_text:
+                dw.update_chart(chart_id=CHART_ID, title=title)
+                dw.update_description(chart_id=CHART_ID, intro=description)
+            else:
+                pass
+            
             dw.update_metadata(chart_id=CHART_ID, properties=metadata_update)
-            dw.update_description(chart_id=CHART_ID, intro=description)
             dw.publish_chart(chart_id=CHART_ID)
             print(f"Chart updated.")
         except:

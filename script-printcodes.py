@@ -55,12 +55,12 @@ for region in regions:
     
     link = f"https://www.datawrapper.de/_/{id}/"
     
-    string = f"**{title}**  **View**: {link}  **Embed**: {code}"
+    string = f"**{title}**<br>**View**: {link}<br>**Embed**: {code}"
     print(string)
     codes.append(string)
 
 
 with open("embed_codes.md", "w") as text_file:
-    text_file.write("    ".join(codes))
+    text_file.write("<br><br>".join(codes))
     
 print(len(codes))

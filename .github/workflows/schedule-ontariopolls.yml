@@ -1,7 +1,7 @@
 name: Update Ontario polling graphics
 on:
   schedule:
-    - cron: 0/15 * * * *
+    - cron: 0 16 * * *
 
 jobs:
   pull_data:
