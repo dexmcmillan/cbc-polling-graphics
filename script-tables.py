@@ -10,15 +10,11 @@ leaders = {
         }
 
 french_names = {
-        "Liberal Party": "Parti libéral de l'Ontario",
-        "Progressive Conservative Party": "Parti progressiste-conservateur de l'Ontario",
-        "Green Party": "Parti vert de l'Ontario",
-        "New Democratic Party": "Nouveau Parti démocratique de l'Ontario",
-        "Other": "Les autres"
-        }
-
-french_regions = {
-        "Northern Ontario": "Nord de l'Ontario",
+        "Liberal Party": "Parti libéral",
+        "Progressive Conservative Party": "Parti progressiste-conservateur",
+        "Green Party": "Parti vert",
+        "New Democratic Party": "Nouveau Parti démocratique",
+        "Other": "Autres"
         }
 
 for region in regions:
@@ -43,10 +39,8 @@ for region in regions:
     
     if region["language"] == "french":
         table.data["Party"] = table.data["Party"].replace(french_names)
-        note = f"Dernière mise à jour: {table.day} à {table.time}".replace(" 0", " ")
     else:
         title = f"Polling averages in {region['region']}"
-        note = f"Last updated on {table.day} at {table.time}".replace(" 0", " ")
 
     table.data["Text"] = "**" + table.data["Party"] + \
         "**" + "<br>" + table.data["Leader"]
@@ -56,4 +50,4 @@ for region in regions:
     other = table.data.loc[4, :]
     table.data = table.data.drop(4).append(other)
 
-    table.publish(region['CHART_ID'], note=note)
+    table.publish(region['CHART_ID'])

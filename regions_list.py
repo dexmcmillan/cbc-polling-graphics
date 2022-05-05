@@ -35,38 +35,8 @@ regions = [
         "language": "english"
 },
     {
-        "region": "Toronto",
-        "CHART_ID": "es2W1",
-        "language": "french"
-},
-    {
-        "region": "Greater Toronto Area",
-        "CHART_ID": "0rfg8",
-        "language": "french"
-},
-    {
         "region": "Ontario",
         "CHART_ID": "2ZdMI",
         "language": "french"
 },
-    {
-        "region": "Hamilton-Niagara",
-        "CHART_ID": "v3Jo6",
-        "language": "french"
-},
-    {
-        "region": "Southwest Ontario",
-        "CHART_ID": "vpQ2Q",
-        "language": "french"
-},
-    {
-        "region": "Eastern Ontario",
-        "CHART_ID": "XReiD",
-        "language": "french"
-},
-    {
-        "region": "Northern Ontario",
-        "CHART_ID": "udh0b",
-        "language": "french"
-}
 ]

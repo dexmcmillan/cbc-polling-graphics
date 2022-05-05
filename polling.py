@@ -14,6 +14,7 @@ class OntarioPolling:
     description = ""
     probabilities = ""
     language = ""
+    note = ""
     
     def __init__(self, language="english"):
         today = dt.datetime.today()
@@ -28,10 +29,12 @@ class OntarioPolling:
             locale.setlocale(locale.LC_ALL, 'en_US')
             self.day = today.strftime('%B %d, %Y')
             self.time = today.strftime('%I:%M') + " " + ".".join(list(today.strftime('%p'))).lower() + "."
+            self.note = f"Last updated on {self.day} at {self.time}".replace(" 0", " ")
         elif language == "french":
             locale.setlocale(locale.LC_ALL, 'fr_FR')
             self.day = today.strftime('%d %B %Y')
-            self.time = today.strftime('%H:%M') + "."
+            self.time = today.strftime('%H') + "h" + today.strftime('%M') + "."
+            self.note = f"Mis à jour le {self.day} à {self.time}".replace(" 0", " ")
             
         
         
@@ -81,7 +84,7 @@ class OntarioPolling:
         
         return self
         
-    def publish(self, CHART_ID, title=None, description=None, update_text=False, note=""):
+    def publish(self, CHART_ID, title=None, description=None, update_text=False):
 
         if title == None:
             title = self.title
@@ -109,7 +112,7 @@ class OntarioPolling:
             
         metadata_update = {
             "annotate": {
-                "notes": note
+                "notes": self.note
             }
         }
 
