@@ -1,4 +1,4 @@
-name: Update Ontario polling line chart
+name: Update Ontario polling graphics
 on:
   schedule:
     - cron: 0/15 * * * *

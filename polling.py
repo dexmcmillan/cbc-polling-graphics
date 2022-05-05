@@ -16,7 +16,9 @@ class OntarioPolling:
     def __init__(self):
         today = dt.datetime.today()
         
-        if os.name == "posix":
+        os_name = os.name
+        
+        if os_name == "posix":
             today = today + dt.timedelta(hours=4)
         
         self.day = today.strftime('%B %d, %Y')
