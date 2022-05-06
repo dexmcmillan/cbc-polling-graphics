@@ -26,7 +26,7 @@ class OntarioPolling:
             today = today - dt.timedelta(hours=4)
             
         if language == "english":
-            locale.setlocale(locale.LC_ALL, 'en_US')
+            locale.setlocale(locale.LC_ALL, 'en_EN')
             self.day = today.strftime('%B %d, %Y')
             self.time = today.strftime('%I:%M') + " " + ".".join(list(today.strftime('%p'))).lower() + "."
             self.note = f"Last updated on {self.day} at {self.time}".replace(" 0", " ")
