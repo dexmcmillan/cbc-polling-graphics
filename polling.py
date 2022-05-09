@@ -24,18 +24,22 @@ class OntarioPolling:
         
         if os_name == "posix":
             today = today - dt.timedelta(hours=4)
+            french_locale = 'fr_FR.UTF-8'
+        else:
+            french_locale = 'fr_FR'    
+        
             
         if language == "english":
             self.day = today.strftime('%B %d, %Y')
             self.time = today.strftime('%I:%M') + " " + ".".join(list(today.strftime('%p'))).lower() + "."
             self.note = f"Last updated on {self.day} at {self.time}".replace(" 0", " ")
         elif language == "french":
-            locale.setlocale(locale.LC_ALL, 'fr_FR')
+            locale.setlocale(locale.LC_ALL, french_locale)
             self.day = today.strftime('%d %B %Y')
             self.time = today.strftime('%H') + "h" + today.strftime('%M') + "."
             self.note = f"Mis à jour le {self.day} à {self.time}".replace(" 0", " ")
             
-        
+        print(locale.LC_ALL)
         
         blurbs = requests.get("https://canopy.cbc.ca/live/poll-tracker/v5/ON").json()['data']["blurbs"]
 
