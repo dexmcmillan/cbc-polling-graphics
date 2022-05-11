@@ -39,7 +39,7 @@ class OntarioPolling:
             self.time = today.strftime('%H') + "h" + today.strftime('%M') + "."
             self.note = f"Mis à jour le {self.day} à {self.time}".replace(" 0", " ")
             
-        print(locale.LC_ALL)
+        print(locale.locale_alias)
         
         blurbs = requests.get("https://canopy.cbc.ca/live/poll-tracker/v5/ON").json()['data']["blurbs"]
 
@@ -94,6 +94,8 @@ class OntarioPolling:
             
         if description == None:
             description = self.description
+            
+        print(self.title)
             
         try:
             with open('./auth.txt', 'r') as f:
