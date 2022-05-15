@@ -16,6 +16,11 @@ class OntarioPolling:
     language = ""
     note = ""
     
+    
+    
+    
+    
+    
     def __init__(self, language="english"):
         today = dt.datetime.today()
         self.language = language
@@ -24,7 +29,7 @@ class OntarioPolling:
         
         if os_name == "posix":
             today = today - dt.timedelta(hours=4)
-            french_locale = 'fr_FR.UTF-8'
+            french_locale = 'fr_ca'
         else:
             french_locale = 'fr_FR'    
         
@@ -46,6 +51,16 @@ class OntarioPolling:
         self.title = blurbs[0]["blurb_headline"]
         self.description = blurbs[0]["blurb_text"]
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     def get_probabilities(self):
         probabilities = requests.get("https://canopy.cbc.ca/live/poll-tracker/v5/ON").json()['data']['supplements']
         
@@ -57,6 +72,20 @@ class OntarioPolling:
         self.probabilities = probabilities
         
         return self 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
     def get_data(self, region="Ontario", data_type="seats", poll_type="med"):
         
@@ -86,6 +115,15 @@ class OntarioPolling:
         )
         
         return self
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
     def publish(self, CHART_ID, title=None, description=None, update_text=False):
 

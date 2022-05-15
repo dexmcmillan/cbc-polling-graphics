@@ -29,4 +29,8 @@ jobs:
       - name: Update tables (English and French)
         env: 
             DW_AUTH_TOKEN: ${{ secrets.DW_AUTH_TOKEN }}
-        run: python3 script-tables.py
+        run: |
+          export LC_ALL="en_US.UTF-8"
+          export LC_CTYPE="en_US.UTF-8"
+          sudo dpkg-reconfigure locales
+          python3 script-tables.py
