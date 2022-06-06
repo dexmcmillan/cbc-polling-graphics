@@ -1,5 +1,7 @@
 # Ontario election 2022 - Polling graphics
 
+**As of June 2, 2022, these graphics are retired and will no longer be updated.**
+
 A set of polling graphics that pull data periodically from CBC's Poll Tracker API using Github actions.
 
 **Polling averages in Toronto**<br>**View**: https://www.datawrapper.de/_/lXdRO/<br>**Embed**: <iframe title="Polling averages in Toronto" aria-label="Table" id="datawrapper-chart-lXdRO" src="https://datawrapper.dwcdn.net/lXdRO/8/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="479"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
